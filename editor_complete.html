@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKEDITORサンプル完成</title>
+</head>
+<body>
+
+<select id="memos">
+    <option value="">--選択--</option>
+    <option value="memo1">メモ１</option>
+    <option value="memo2">メモ２</option>
+    <option value="memo3">メモ３</option>
+</select>
+<textarea id="editor">
+    
+</textarea>
+<button id="save">Save</button>
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+<script>
+let editor;
+ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( newEditor => {
+        console.log(newEditor);
+        editor = newEditor;
+    } )
+    .catch( error => {
+        console.error( error );
+    });
+//Saveイベント
+document.querySelector("#save").onclick = function(){
+    const v = editor.getData();
+    const n = document.querySelector("#memos").value;
+    console.log(v);
+    localStorage.setItem(n,v);
+}
+//Selectして持ってくる
+document.querySelector("#memos").onchange = function(){
+    const n = this.value;
+    if(localStorage.getItem(n)){
+        const memo = localStorage.getItem(n);
+        editor.setData(memo);
+    }
+}
+
+
+</script>
+</body>
+</html>

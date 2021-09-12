@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動画内で作成した：CKEDITOR</title>
+</head>
+<body>
+<textarea id="editor">
+    
+</textarea>
+<button id="save">Save</button>
+<script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+<script>
+let editor;
+ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( newEditor => {
+        console.log(newEditor);
+        editor = newEditor;
+        //表示したときにデータを取得する
+        if(localStorage.getItem("memo")){
+            const memo = localStorage.getItem("memo");
+            editor.setData(memo);
+        }
+    } )
+    .catch( error => {
+        console.error( error );
+    });
+
+//Saveイベント
+document.querySelector("#save").onclick = function(){
+    const v = editor.getData();
+    console.log(v);
+    localStorage.setItem("memo",v);
+}
+
+</script>
+</body>
+</html>
